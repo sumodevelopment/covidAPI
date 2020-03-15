@@ -38,6 +38,47 @@ var getall = setInterval(async () => {
       result.recovered = count;
     }
   });
+  
+  html('.number-table-main').filter((i, el) => {
+
+        let val = el.children[0].data || 0;
+        val = parseInt(val.replace(/,/g, "") || "0", 10);
+
+        switch (i) {
+            case 0:
+                result.currentlyInfected ={
+                    count:  val
+                };
+                break;
+            case 1: 
+                result.closedCases = {
+                    count: val
+                };
+            default:
+                break;
+        }
+    });
+
+    html('.number-table').filter((i, el)=>{
+        let val = el.children[0].data || 0;
+        val = parseInt(val.replace(/,/g, "") || "0", 10);
+
+        switch (i) {
+            case 0:
+                result.currentlyInfected.mildInfection = val;
+                break;
+            case 1: 
+                result.currentlyInfected.serious = val;
+            case 2:
+                result.closedCases.recovered = val; 
+            break;
+            case 3:
+                result.closedCases.deaths = val; 
+            break;
+            default:
+                break;
+        }
+    });
 
   db.set("all", result);
   console.log("Updated The Cases", result);
